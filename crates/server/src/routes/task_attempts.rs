@@ -1387,10 +1387,7 @@ pub async fn run_setup_script(
         .ok_or(SqlxError::RowNotFound)?;
 
     let repos = WorkspaceRepo::find_repos_for_workspace(pool, workspace.id).await?;
-    let executor_action = match deployment
-        .container()
-        .setup_actions_for_repos(&repos)
-    {
+    let executor_action = match deployment.container().setup_actions_for_repos(&repos) {
         Some(action) => action,
         None => {
             return Ok(ResponseJson(ApiResponse::error_with_data(
@@ -1471,10 +1468,7 @@ pub async fn run_cleanup_script(
         .ok_or(SqlxError::RowNotFound)?;
 
     let repos = WorkspaceRepo::find_repos_for_workspace(pool, workspace.id).await?;
-    let executor_action = match deployment
-        .container()
-        .cleanup_actions_for_repos(&repos)
-    {
+    let executor_action = match deployment.container().cleanup_actions_for_repos(&repos) {
         Some(action) => action,
         None => {
             return Ok(ResponseJson(ApiResponse::error_with_data(
